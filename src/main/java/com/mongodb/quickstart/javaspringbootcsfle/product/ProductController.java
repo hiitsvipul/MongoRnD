@@ -25,6 +25,7 @@ public class ProductController {
 	@PostMapping("/addProduct")
 	public ResponseEntity<Product> addProduct(@RequestBody Product product){
 		Product result = null;
+		// make it "true" to generate random products
 		boolean createRandomProducts = true;
 		if(createRandomProducts) {
 			String[] PRODUCT_NAMES = {
@@ -38,21 +39,19 @@ public class ProductController {
 			List<Product> products = new ArrayList<>();
 	        Random random = new Random();
 
-	        for (int i = 0; i < 30; i++) {
+	        for(int i = 0; i < 30; i++) {
 	            String productName = PRODUCT_NAMES[random.nextInt(PRODUCT_NAMES.length)];
 	            int price = 50 + random.nextInt(950); // Random price between 50 and 999
 	            products.add(new Product(productName, price));
 	        }
-
-	        // Print all products
 	        
-	        for (Product p : products) {
+	        for(Product p : products) {
 	        	result = productDao.addProduct(p);
 	        }
-		}else {
-			result = productDao.addProduct(product);
 		}
-		
+			else{
+					result = productDao.addProduct(product);
+				}
 		
 		return ResponseEntity.ok().body(result);
 	} 

@@ -24,10 +24,14 @@ public class ProductDAO {
 	}
 	
 	public List<Product> findMaxProduct() {
+		// Using Aggregation 
 		MatchOperation matchOperation = Aggregation.match(Criteria.where("productName").is("Tablet"));
 		TypedAggregation<Product> aggregation = Aggregation.newAggregation(Product.class,matchOperation);
 		List<Product> product = mongoTemplate.aggregate(aggregation, Product.class).getMappedResults();
-		//		Query query = new Query();
+		
+		// Using Query
+		
+//		Query query = new Query();
 //		query.addCriteria(Criteria.where("productName").regex("^"+Pattern.quote("c")+"$","i"));
 //		List<Product> product = mongoTemplate.find(query, Product.class);
 		return product;
